@@ -11,7 +11,7 @@ como DSL (Domain Specific Language: lenguaje de dominio específico)
 porque están pensados para eso: proveer abstracciones adecuadas para
 resolver problemas acotados a cierto ámbito. La idea original del
 lenguaje está en este
-[artículo](https://cs.au.dk/~hosc/local/HOSC-15-4-pp349-365.pdf "en inglés") 
+[artículo](https://cs.famaf.unc.edu.ar/~mpagano/henderson-funcgeo2.pdf "en inglés") 
 de Peter Henderson, que recomendamos leer.
 
 Entre las decisiones para elegir está ver si es un DSL embebido en el
@@ -107,7 +107,7 @@ bi-dimensional donde $a$ indica el desplazamiento del origen, $b$ el
   -- Pone una figura al lado de la otra, ambas ocupan el mismo espacio
   (///) :: Dibujo a -> Dibujo a -> Dibujo a
 
-  -- Superpone una figura sobre otra
+  -- Superpone una figura con otra
   (^^^) :: Dibujo a -> Dibujo a -> Dibujo a
 
   -- dada una figura la repite en cuatro cuadrantes
@@ -225,16 +225,27 @@ como punto extra si se usa otra (ver al final para instalar `gloss`).
   interp :: Output a -> Output (Dibujo a)
   ```
 
-La semántica informal de cada comando está dada por la siguiente tabla
+Supongamos que tenemos tres funciones de $p,q,r$ que dados tres
+vectores indicando, respectivamente, un desplazamiento al origen $a$, un
+ancho $b$ y un alto $c$ producen las siguientes figuras:
 
-| Operacion                | Semántica                                | Visualmente                             | 
-|:-------------------------|:-----------------------------------------|:----------------------------------------|
+|  | figura |
+| :--  | :-- |
+| $p(a,b,c)=q(a,b,c)$ | ![original](img/orig.png){width=50px } |
+| $r(a,b,c)$ | ![otra](img/otra.png){width=50px } |
+
+La semántica de cada operación de nuestro lenguaje está dada por la
+siguiente tabla:
+
+| Operacion                | Semántica                                | Visualmente | 
+|:-------------------------|:-----------------------------------------|:------------|
 | $rotar(p)(a,b,c)$        | $p(a+b,c,-b)$                            | ![rot](img/rotate.png){ width=50px }      |
 | $rot45(p)(a,b,c)$        | $p(a+(b+c)/2,(b+c)/2,(c-b)/2$            | ![rot45](img/rot45.png){ width=50px }     |
 | $espejar(p)(a,b,c)$      | $p(a + b ,-b,c)$                         | ![rot](img/flip.png){ width=50px }        |
-| $encimar(p,q)(a,b,c)$    | $p(a,b,c) ∪ q(a,b,c)$                    |                                         | 
+| $encimar(p,r)(a,b,c)$    | $p(a,b,c) ∪ r(a,b,c)$                   | ![encimar](img/encimar.png){width=50px }        | 
 | $juntar(n,m,p,q)(a,b,c)$ <br> | $p(a,b',c) ∪ p(a + b',r'* b, c)$ con <br> $r' = n/(m+n)$, $r=m/(m+n)$, $b'=r * b$      | ![juntar](img/juntar.png){ width=75px }   |
-| $apilar(p)(a,b,c)$      <br> | $p(a + b',r'* b, c) ∪ p(a ,b, c')$ con <br> $r' = n/(m+n)$, $r=m/(m+n)$, $c'=r' * b$  |                                          | 
+| $apilar(p)(a,b,c)$      <br> | $p(a + b',r'* b, c) ∪ p(a ,b, c')$ con <br> $r' = n/(m+n)$, $r=m/(m+n)$, $c'=r' * b$  | ![apilar](img/apilar.png){ width=75px }   |
+                                         | 
 
 Se recomienda fuertemente realizar dibujitos para comprender las
 operaciones.
@@ -412,7 +423,16 @@ mejor que nosotres qué hacer ó que lo más fácil sea bajar e instalar
 * [Learn you a Haskell...](http://learnyouahaskell.com/) 
 * [Real World Haskell](http://book.realworldhaskell.org/read/).
 * [Buscador de funciones por tipo](https://www.haskell.org/hoogle/)
+* [Guía de la sintaxis de Haskell](http://www.cse.chalmers.se/edu/year/2014/course/TDA452/haskell-syntax.html)
 * [Documentación de gloss](http://hackage.haskell.org/package/gloss)
 
 
+### Posibles problemas de instalación
 
+Si al tratar de instalar gloss tiene el siguiente mensaje de error:
+
+    Missing C library: GL
+
+pueden solucionarlo instalando las siguientes librerías de sistema.
+
+    $ sudo apt-get install freeglut3 freeglut3-dev
