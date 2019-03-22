@@ -1,18 +1,21 @@
 module Dibujo where
 
 -- definir el lenguaje
-type Dibujo a = Basica a | Rotar a | Espejar a | Rot45 a
-              | Apilar Int Int a a
-              | Juntar Int Int a a
-              | Encimar a a
+data Dibujo a = Basica a 
+              | Rotar (Dibujo a) 
+              | Espejar (Dibujo a) 
+              | Rot45 (Dibujo a)
+              | Apilar Int Int (Dibujo a) (Dibujo a)
+              | Juntar Int Int (Dibujo a) (Dibujo a)
+              | Encimar (Dibujo a) (Dibujo a)
 
 -- composicion n-veces de una funcion
 comp :: (a -> a) -> Int -> a-> a
 comp f 0 a  = a 
-comp f c a = comp(f c-1 f(a))
+comp f c a = comp f (c-1) (f a)
 
 -- rotaciones de multiplos de 90
-r180 :: Dibujo a -> Dibujo -> a
+r180 :: Dibujo a -> Dibujo a
 r180 a = Rotar $ Rotar a
 
 r270 :: Dibujo a -> Dibujo a
@@ -48,11 +51,11 @@ ciclar a = ((Rotar a) /// a ) .-. ((r270 a) /// (r180 a))
 
 -- ver un a como una figura
 pureDibe :: a -> Dibujo a
-pureDibe a = Basico a
+pureDibe a = Basica a
 
 -- map para nuestro lenguaje
 mapDib :: (a -> b) -> Dibujo a -> Dibujo b
-mapDib f (Basico a) = Basico (f a)
+mapDib f (Basica a) = Basica (f a)
 mapDib f (Rotar a) = Rotar (mapDib f a)
 mapDib f (Espejar a) = Espejar (mapDib f a)
 mapDib f (Rot45 a) = Rot45 (mapDib f a)
