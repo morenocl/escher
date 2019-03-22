@@ -17,3 +17,17 @@ r180 a = Rotar $ Rotar a
 
 r270 :: Dibujo a -> Dibujo a
 r270 a = Rotar $ Rotar $ Rotar a
+
+
+-- Pone una figura sobre la otra, ambas ocupan el mismo espacio
+(.-.) :: Dibujo a -> Dibujo a -> Dibujo a
+(.-.) a b = Apilar a b
+
+
+-- Pone una figura al lado de la otra
+(///) :: Dibujo a -> Dibujo a -> Dibujo a
+(///) a b = Juntar a b
+
+-- Superpone una figura con otra
+(^^^) :: Dibujo a -> Dibujo a -> Dibujo a
+(^^^) a b = Encimar a b
