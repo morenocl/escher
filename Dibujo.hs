@@ -44,3 +44,24 @@ encimar4 a = ((Rotar a) ^^^ (r180 a)) ^^^ ((r270 a) ^^^ a)
 -- cuadrado con la misma figura rotada $i$ por $90$ para $i \in \{1..3\}$.
 -- No confundir con encimar4!
 ciclar :: Dibujo a -> Dibujo a
+ciclar a = ((Rotar a) /// a ) .-. ((r270 a) /// (r180 a))
+
+-- ver un a como una figura
+pureDibe :: a -> Dibujo a
+pureDibe a = Basico a
+
+-- map para nuestro lenguaje
+mapDib :: (a -> b) -> Dibujo a -> Dibujo b
+mapDib f (Basico a) = Basico (f a)
+mapDib f (Rotar a) = Rotar (mapDib f a)
+mapDib f (Espejar a) = Espejar (mapDib f a)
+mapDib f (Rot45 a) = Rot45 (mapDib f a)
+mapDib f (Apilar n m a b) =  Apilar n m (mapDib f a) (mapDib f b) 
+mapDib f (Juntar n m a b) = Juntar n m (mapDib f a) (mapDib f b)
+mapDib f (Encimar a b) = Encimar (mapDib f a) (mapDib f b)
+
+-- verificar que las operaciones satisfagan
+-- 1. map pureDibe = id
+-- 2. map (g . f) = mapDib g . mapDib f
+
+
