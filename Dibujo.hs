@@ -37,8 +37,9 @@ a ^^^ b = Encimar a b
 
 
 -- dada una figura la repite en cuatro cuadrantes
-cuarteto :: Dibujo a -> Dibujo a
-cuarteto a = (a /// a) .-. (a /// a)
+cuarteto :: Dibujo a -> Dibujo a -> Dibujo a -> Dibujo a -> Dibujo a
+cuarteto a b c d = (a /// b) .-. (c /// d)
+
 
 -- una figura repetida con las cuatro rotaciones, superimpuestas.
 encimar4 :: Dibujo a -> Dibujo a 
