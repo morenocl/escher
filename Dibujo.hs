@@ -68,4 +68,24 @@ mapDib f (Encimar a b) = Encimar (mapDib f a) (mapDib f b)
 -- 1. map pureDibe = id
 -- 2. map (g . f) = mapDib g . mapDib f
 
+-- estructura general para la semántica (a no asustarse. Ayuda: 
+-- pensar en foldr y las definiciones de intro a la lógica)
+sem :: (a -> b) -> (b -> b) -> (b -> b) -> (b -> b) ->
+    (Int -> Int -> b -> b -> b) -> 
+    (Int -> Int -> b -> b -> b) -> 
+    (b -> b -> b) ->
+    Dibujo a -> b
+sem bas rot esp rot45 api jun enc (Basica a) = bas a
+sem bas rot esp rot45 api jun enc (Rotar a) = rot (sem bas rot esp rot45 api jun enc a)
+sem bas rot esp rot45 api jun enc (Espejar a) = esp (sem bas rot esp rot45 api jun enc a)
+sem bas rot esp rot45 api jun enc (Rot45 a) = rot45 (sem bas rot esp rot45 api jun enc a)
+sem bas rot esp rot45 api jun enc (Apilar x y a b) = api x y pd sd
+    where pd = sem bas rot esp rot45 api jun enc a
+          sd = sem bas rot esp rot45 api jun enc b
+sem bas rot esp rot45 api jun enc (Juntar x y a b) = jun x y pd sd
+    where pd = sem bas rot esp rot45 api jun enc a
+          sd = sem bas rot esp rot45 api jun enc b
+sem bas rot esp rot45 api jun enc (Encimar a b) = enc pd sd
+    where pd = sem bas rot esp rot45 api jun enc a
+          sd = sem bas rot esp rot45 api jun enc b
 
