@@ -8,6 +8,7 @@ data Dibujo a = Basica a
               | Apilar Int Int (Dibujo a) (Dibujo a)
               | Juntar Int Int (Dibujo a) (Dibujo a)
               | Encimar (Dibujo a) (Dibujo a)
+                deriving(Show,Eq)
 
 -- composicion n-veces de una funcion
 comp :: (a -> a) -> Int -> a-> a
@@ -101,4 +102,34 @@ sem bas rot esp rot45 api jun enc (Juntar x y a b) = jun x y pd sd
 sem bas rot esp rot45 api jun enc (Encimar a b) = enc pd sd
     where pd = sem bas rot esp rot45 api jun enc a
           sd = sem bas rot esp rot45 api jun enc b
+
+-- Tipo Predicado
+type Pred a = a -> Bool
+
+-- ¿Que es una figura vacia?
+--limpia :: Pred a -> Dibujo a -> Dibujo a
+
+predor ::  Int -> Int -> Bool -> Bool -> Bool
+predor _ _ a b = a || b
+
+-- alguna básica satisface el predicado
+anyDIb :: Pred a -> Dibujo a -> Bool
+anyDIb p a  = sem p id id id predor predor (||) a
+
+predand ::  Int -> Int -> Bool -> Bool -> Bool
+predand _ _ a b = a && b
+
+-- todas las básicas satisfacen el predicado
+allDib ::  Pred a -> Dibujo a -> Bool
+allDib p a = sem p id id id predand predand (&&) a
+
+-- describe la figura
+desc :: (a -> String) -> Dibujo a -> String
+desc s (Basica a) = "bas " ++ s a
+desc s (Rotar a) = "rot " ++ "(" ++ desc s a ++")"
+desc s (Espejar a) = "esp " ++ "(" ++ desc s a ++")"
+desc s (Rot45 a) = "rot45 " ++ "(" ++ desc s a ++")"
+desc s (Apilar _ _ a b) = "api " ++ "(" ++ desc s a ++")" ++ "(" ++ desc s b ++")"
+desc s (Juntar _ _ a b) = "jun " ++ "(" ++ desc s a ++")"++ "(" ++ desc s b ++")"
+desc s (Encimar a b ) = "enc " ++ "(" ++ desc s a ++")"++ "(" ++ desc s b ++")"
 
