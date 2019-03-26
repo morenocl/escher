@@ -61,6 +61,7 @@ esta (a,b) ((x,y) : xs) | x == a = (x,y+b):xs
                         | otherwise = (x,y):(esta (a,b) xs)
 
 esta2 :: Eq a => [(a,Int)] -> [(a,Int)] -> [(a,Int)]
+esta2 [] ys = ys  
 esta2 ((x,y) : xs ) ys = esta2 xs (esta (x,y) ys)
 
 junta :: Eq a => Int -> Int -> [(a,Int)] -> [(a,Int)] -> [(a,Int)]
