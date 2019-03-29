@@ -75,7 +75,18 @@ esRot360 a = ( (sem (const 0) (+ 1) (+ 0) (+ 0) sum sum (+) a)::Integer) `mod` 4
 -- hay 2 espejados seguidos (empezando en el tope)
 esFlip2 :: Pred (Dibujo a)
 esFlip2 a = ((sem (const 0) (+1) (+0) (+0) sum sum (+) a)::Integer) `mod` 2 == 0
-    where sum  = \_ _ b a -> b  + a
+    where sum  = \_ _ b a -> b  + a 
+
+
+
+
+check :: Pred (Dibujo a) -> String -> Dibujo a -> Either String (Dibujo a)
+check p error b | p b == True = Right b
+                | otherwise   = Left error
+
+
+
+
 
 
 
