@@ -9,18 +9,14 @@ type Pred a = a -> Bool
 --limpia :: Pred a -> Dibujo a -> Dibujo a
 
 -- alguna básica satisface el predicado
-predor ::  Int -> Int -> Bool -> Bool -> Bool
-predor _ _ a b = a || b
-
 anyDIb :: Pred a -> Dibujo a -> Bool
 anyDIb p a  = sem p id id id predor predor (||) a
+    where predor = \_ _ a b -> a || b
 
 -- todas las básicas satisfacen el predicado
-predand ::  Int -> Int -> Bool -> Bool -> Bool
-predand _ _ a b = a && b
-
 allDib ::  Pred a -> Dibujo a -> Bool
 allDib p a = sem p id id id predand predand (&&) a
+    where predand = \_ _ x y -> x && y
 
 -- describe la figura
 rot :: String -> String 
