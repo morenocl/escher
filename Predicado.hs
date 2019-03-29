@@ -85,7 +85,24 @@ check p error b | p b == True = Right b
                 | otherwise   = Left error
 
 
+-- aplica todos los chequeos y acumula todos los errores,
+-- sólo devuelve la figura si no hubo ningún error.
+todoBien :: Dibujo a -> Either [String] (Dibujo a)
+todoBien d = case check esRot360 "err1" d of 
+                Left err1 -> case check esFlip2 "err2" d of
+                                Left err2 -> Left [err1,err2]
+                                Right d -> Left [err1]
+                Right d   -> case  check esFlip2 "err2" d of
+                                Left err2 -> Left [err2]
+                                Right d -> Right d
 
+-- Corrige errores de rotacion
+noRot360 :: Dibujo a -> Dibujo a
+noRot360 Rotar(Rotar(Rotar(Rotar d))) = d
+
+-- Corrige errores de espejar
+noFlip2  :: Dibujo a -> Dibujo a
+noFlip2 Espejar(Espejar d) = d
 
 
 
