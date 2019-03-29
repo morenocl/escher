@@ -102,4 +102,16 @@ sem bas rot esp rot45 api jun enc (Juntar x y a b) = jun x y pd sd
 sem bas rot esp rot45 api jun enc (Encimar a b) = enc pd sd
     where pd = sem bas rot esp rot45 api jun enc a
           sd = sem bas rot esp rot45 api jun enc b
+          
+          
+          
+-- Se puede hacer recurcion para mejorar en los demas casos.
+-- Espejar Rotar Rotar Rotar Rotar Basica a => Espejar Basica a
+quitar4Rot :: Dibujo a -> Dibujo a
+quitar4Rot (Rotar(Rotar(Rotar(Rotar d)))) = d 
+
+quitar2Espejar :: Dibujo a -> Dibujo a
+quitar2Espejar (Espejar(Espejar d)) = d
+
+
 
