@@ -67,9 +67,21 @@ contar :: Eq a => Dibujo a -> [(a,Int)]
 contar a = sem primero id id id junta junta esta2 a
 
 -- hay 4 rotaciones seguidas (empezando en el tope)
+-- ¿que pasa con una rotacion 360+90?
 esRot360 :: Pred (Dibujo a)
 esRot360 a = ( (sem (const 0) (+ 1) (+ 0) (+ 0) sum sum (+) a)::Integer) `mod` 4 == 0
     where sum  = \_ _ b a -> b  + a
 
 -- hay 2 espejados seguidos (empezando en el tope)
---esFlip2 :: Pred (Dibujo a)
+esFlip2 :: Pred (Dibujo a)
+esFlip2 a = ((sem (const 0) (+1) (+0) (+0) sum sum (+) a)::Integer) `mod` 2 == 0
+    where sum  = \_ _ b a -> b  + a
+
+
+
+
+
+
+
+
+
