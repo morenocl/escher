@@ -66,5 +66,9 @@ transf f d (xs,ys) a b c  = translate (fst a') (snd a') .
 
 
 -- Claramente esto sólo funciona para el ejemplo!
-interp :: Output () -> Output (Dibujo ())
-interp f () = f ()
+-- interp :: Output a -> Output (Dibujo a)
+-- interp :: (a -> Vector -> Vector -> Vector -> Picture) -> Dibujo a -> (FloatingPic)
+-- interp f a = f a
+
+rotar :: FloatingPic -> Vector -> Vector -> Vector -> Picture
+rotar p a b c = p (a V.+ b) c (V.negate b)
