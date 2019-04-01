@@ -99,12 +99,12 @@ todoBien d = case check esRot360 "err1" d of
 
 -- Corrige errores de rotacion
 noRot360 :: Dibujo a -> Dibujo a
-noRot360 d | esRot360 d = noRot360 . quitar4Rot d
+noRot360 d | esRot360 d = noRot360 $ quitar4Rot d
            | otherwise  = d
 
 -- Corrige errores de espejar
 noFlip2  :: Dibujo a -> Dibujo a
-noFlip2 d | esFlip2 d = noFlip2 . quitar2Espejar d
+noFlip2 d | esFlip2 d = noFlip2 $ quitar2Espejar d
           | otherwise  = d
 
 
