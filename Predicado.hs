@@ -75,7 +75,7 @@ esRot360 a = ( (sem (const 0) (+1) (const 0) (const 0) v v w a)::Integer) >= 4
 
 -- hay 2 espejados seguidos (empezando en el tope)
 esFlip2 :: Pred (Dibujo a)
-esFlip2 a = ( (sem (const 0) (const 0) (+ 1) (const 0) v v w a)::Integer) >= 4
+esFlip2 a = ( (sem (const 0) (const 0) (+ 1) (const 0) v v w a)::Integer) >= 2
             where v = \_ _ x y -> ( 0)
                   w = \ x y -> ( 0)
 
@@ -99,12 +99,12 @@ todoBien d = case check esRot360 "err1" d of
 
 -- Corrige errores de rotacion
 noRot360 :: Dibujo a -> Dibujo a
-noRot360 d | esRot360 d = noRot360 $ quitar4Rot d
+noRot360 d | esRot360 d = noRot360 . quitar4Rot d
            | otherwise  = d
 
 -- Corrige errores de espejar
 noFlip2  :: Dibujo a -> Dibujo a
-noFlip2 d | esFlip2 d = noFlip2 $ comp quitar2Espejar 2 d
+noFlip2 d | esFlip2 d = noFlip2 . quitar2Espejar d
           | otherwise  = d
 
 

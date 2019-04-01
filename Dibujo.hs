@@ -12,8 +12,8 @@ data Dibujo a = Basica a
 
 -- composicion n-veces de una funcion
 comp :: (a -> a) -> Int -> a-> a
-comp f 0 a  = a 
-comp f c a = comp f (c-1) (f a)
+comp f 0 = id
+comp f c = f . comp f (c-1)
 
 -- rotaciones de multiplos de 90
 r180 :: Dibujo a -> Dibujo a
