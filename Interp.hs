@@ -83,16 +83,16 @@ encimar :: FloatingPic -> FloatingPic -> Vector -> Vector -> Vector -> Picture
 encimar p r a b c = pictures [p a b c, r a b c]
 
 juntar :: Int -> Int -> FloatingPic -> FloatingPic -> Vector -> Vector -> Vector -> Picture
-juntar x y p r a b c = Pictures  [p a b' c , r (a V.+ b') (r' V.* b) c]
-                    where r = y/(y+x)
-                          b' = r * b
-                          r' = x/(x+y)
+juntar n m p q a b c = pictures [p a b' c , q (a V.+ b') (r V.* b) c]
+                    where r = fromIntegral m / fromIntegral(m+n)
+                          r' = fromIntegral n / fromIntegral (n+m)
+                          b' = r V.* b
 
-encimar :: Int -> Int -> FloatingPic -> FloatingPic -> Vector -> Vector -> Vector -> Picture
-encimar x y p r a b c = Pictures  [p (a V.+ b') (r' V.* b) c , r a b c']
-                    where b' = r * b
-                          r = y/(y+x)
-                          r' = x/(x+y)
-                          c' = r' * b
-                                                    
+apilar :: Int -> Int -> FloatingPic -> FloatingPic -> Vector -> Vector -> Vector -> Picture
+apilar n m p q a b c = Pictures  [p (a V.+ b') (r' V.* b) c , q a b c']
+                    where r = fromIntegral m / fromIntegral (m+n)
+                          b' = r V.* b
+                          r' = fromIntegral n/ fromIntegral (n+m)
+                          c' = r' V.* b
+                                                
 
