@@ -66,9 +66,9 @@ transf f d (xs,ys) a b c  = translate (fst a') (snd a') .
 
 
 -- Claramente esto sólo funciona para el ejemplo!
--- interp :: Output a -> Output (Dibujo a)
+interp :: Output a -> Output (Dibujo a)
 -- interp :: (a -> Vector -> Vector -> Vector -> Picture) -> Dibujo a -> (FloatingPic)
--- interp f a = f a
+interp f a = sem f rotar espejar rotar45 apilar juntar encimar a
 
 rotar :: FloatingPic -> Vector -> Vector -> Vector -> Picture
 rotar p a b c = p (a V.+ b) c (V.negate b)
@@ -89,10 +89,9 @@ juntar n m p q a b c = pictures [p a b' c , q (a V.+ b') (r V.* b) c]
                           b' = r V.* b
 
 apilar :: Int -> Int -> FloatingPic -> FloatingPic -> Vector -> Vector -> Vector -> Picture
-apilar n m p q a b c = Pictures  [p (a V.+ b') (r' V.* b) c , q a b c']
+apilar n m p q a b c = pictures [p (a V.+ c') b (r V.* c) , q a b c']
                     where r = fromIntegral m / fromIntegral (m+n)
-                          b' = r V.* b
                           r' = fromIntegral n/ fromIntegral (n+m)
-                          c' = r' V.* b
+                          c' = r' V.* c
                                                 
 

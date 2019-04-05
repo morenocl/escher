@@ -105,13 +105,13 @@ sem bas rot esp rot45 api jun enc (Encimar a b) = enc pd sd
           
           
           
--- Se puede hacer recurcion para mejorar en los demas casos.
+-- Se puede hacer recursion para mejorar en los demas casos.
 -- Espejar Rotar Rotar Rotar Rotar Basica a => Espejar Basica a
 quitar4Rot :: Dibujo a -> Dibujo a
 quitar4Rot (Rotar(Rotar(Rotar(Rotar d)))) = d 
 
 quitar2Espejar :: Dibujo a -> Dibujo a
-quitar2Espejar (Espejar(Espejar d)) = d
+quitar2Espejar (Espejar (Espejar d)) = d
 
 
 
