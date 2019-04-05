@@ -82,4 +82,17 @@ espejar p a b c = p (a V.+ b) (V.negate b) c
 encimar :: FloatingPic -> FloatingPic -> Vector -> Vector -> Vector -> Picture
 encimar p r a b c = pictures [p a b c, r a b c]
 
+juntar :: Int -> Int -> FloatingPic -> FloatingPic -> Vector -> Vector -> Vector -> Picture
+juntar x y p r a b c = Pictures  [p a b' c , r (a V.+ b') (r' V.* b) c]
+                    where r = y/(y+x)
+                          b' = r * b
+                          r' = x/(x+y)
+
+encimar :: Int -> Int -> FloatingPic -> FloatingPic -> Vector -> Vector -> Vector -> Picture
+encimar x y p r a b c = Pictures  [p (a V.+ b') (r' V.* b) c , r a b c']
+                    where b' = r * b
+                          r = y/(y+x)
+                          r' = x/(x+y)
+                          c' = r' * b
+                                                    
 
