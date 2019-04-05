@@ -81,8 +81,8 @@ esFlip2 a = ( (sem (const 0) (const 0) (+ 1) (const 0) v v w a)::Integer) >= 2
 
 
 check :: Pred (Dibujo a) -> String -> Dibujo a -> Either String (Dibujo a)
-check p error b | p b == True = Right b
-                | otherwise   = Left error
+check p error b | p b == True = Left error
+                | otherwise   = Right b
 
 
 -- aplica todos los chequeos y acumula todos los errores,
