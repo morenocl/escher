@@ -1,7 +1,7 @@
 module Escher where
 
 import Dibujo
-
+import Interp
 -- supongamos que eligen 
 type Escher = Bool
 
@@ -37,10 +37,13 @@ escher n p = noneto (esquina n p) (lado n p) (r270(esquina n p))
 
 
 
+type Bas = Bool
+ejemplo :: Dibujo Bas
+ejemplo = escher 2 (Basica True)
 
-
-
-
+interpBas :: Output Bas
+interpBas True = trian1
+interpBas False = trian1
 
 
 
