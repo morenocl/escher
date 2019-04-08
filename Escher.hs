@@ -7,12 +7,13 @@ type Escher = Bool
 
 -- el dibujo u
 dibujo_u :: Dibujo Escher -> Dibujo Escher
-dibujo_u p = Rot45(ciclar p) 
+dibujo_u p = encimar4 (Rot45 p)
 
 -- el dibujo t
 dibujo_t :: Dibujo Escher -> Dibujo Escher
-dibujo_t p = p ^^^ Rot45(p .-. p3)
-            where p3 = r270 p
+dibujo_t p = p ^^^ (p2 ^^^ p3)
+            where p2 = Espejar (Rot45 p)
+                  p3 = r270 p2
 
 -- esquina con nivel de detalle en base a la figura p
 esquina :: Int -> Dibujo Escher -> Dibujo Escher
