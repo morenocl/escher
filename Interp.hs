@@ -86,7 +86,7 @@ juntar :: Int -> Int -> FloatingPic -> FloatingPic -> Vector -> Vector -> Vector
 juntar n m p q a b c = pictures [p a b' c , q (a V.+ b') (r V.* b) c]
                     where r = fromIntegral m / fromIntegral(m+n)
                           r' = fromIntegral n / fromIntegral (n+m)
-                          b' = r V.* b
+                          b' = r' V.* b
 
 apilar :: Int -> Int -> FloatingPic -> FloatingPic -> Vector -> Vector -> Vector -> Picture
 apilar n m p q a b c = pictures [p (a V.+ c') b (r V.* c) , q a b c']
