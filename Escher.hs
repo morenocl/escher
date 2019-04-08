@@ -23,11 +23,11 @@ esquina n p = cuarteto (esquina (n-1) p) (lado (n-1) p) (Rotar (lado (n-1) p)) (
 -- lado con nivel de detalle
 lado :: Int -> Dibujo Escher -> Dibujo Escher
 lado 0 _ = Basica False
-lado n p = cuarteto (lado (n-1) p) (lado (n-1) p) (Rotar p) p
+lado n p = cuarteto (lado (n-1) p) (lado (n-1) p) (Rotar (dibujo_t p)) (dibujo_t p)
 
 -- por suerte no tenemos que poner el tipo!
-noneto p q r s t u v w x = Apilar 1 3 (Juntar 1 3 p (Juntar 2 1 q r)) 
-                            (Apilar 2 1 (Juntar 1 3 s (Juntar 2 1 t u)) 
+noneto p q r s t u v w x = Apilar 3 1 (Juntar 1 3 p (Juntar 2 1 q r))
+                            (Apilar 1 2 (Juntar 1 3 s (Juntar 2 1 t u))
                                         (Juntar 1 3 v (Juntar 2 1 w x)))
 
 -- el dibujo de Escher:
@@ -43,8 +43,8 @@ ejemplo :: Dibujo Bas
 ejemplo = escher 2 (Basica True)
 
 interpBas :: Output Bas
-interpBas True = trian1
-interpBas False = trian1
+interpBas True = trian4
+interpBas False = blank
 
 
 
