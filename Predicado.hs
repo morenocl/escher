@@ -6,7 +6,12 @@ import Dibujo
 type Pred a = a -> Bool
 
 -- ¿Que es una figura vacia?
---limpia :: Pred a -> Dibujo a -> Dibujo a
+reemplaza :: Pred a -> a -> a -> a
+reemplaza p a b | p b = a
+                | otherwise = b
+
+limpia :: Pred a -> a -> Dibujo a -> Dibujo a
+limpia p a d = mapDib (reemplaza p a) d
 
 -- alguna básica satisface el predicado
 anyDIb :: Pred a -> Dibujo a -> Bool
