@@ -14,8 +14,8 @@ limpia :: Pred a -> a -> Dibujo a -> Dibujo a
 limpia p a d = mapDib (reemplaza p a) d
 
 -- alguna básica satisface el predicado
-anyDIb :: Pred a -> Dibujo a -> Bool
-anyDIb p a  = sem p id id id predor predor (||) a
+anyDib :: Pred a -> Dibujo a -> Bool
+anyDib p a  = sem p id id id predor predor (||) a
     where predor = \_ _ a b -> a || b
 
 -- todas las básicas satisfacen el predicado

@@ -80,7 +80,7 @@ cambia f (Espejar a) = Espejar (cambia f a)
 cambia f (Rot45 a) = Rot45 (cambia f a)
 cambia f (Apilar n m a b) = Apilar n m (cambia f a) (cambia f b)
 cambia f (Juntar n m a b) = Juntar n m (cambia f a) (cambia f b)
-cambia f (Encimar a b) = Encimar (cambia f a) (cambia f a)
+cambia f (Encimar a b) = Encimar (cambia f a) (cambia f b)
 
 -- estructura general para la semántica (a no asustarse. Ayuda: 
 -- pensar en foldr y las definiciones de intro a la lógica)
