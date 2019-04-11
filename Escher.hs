@@ -2,6 +2,7 @@ module Escher where
 
 import Dibujo
 import Interp
+import Graphics.Gloss
 -- supongamos que eligen 
 type Escher = Bool
 
@@ -44,8 +45,12 @@ ejemplo = escher 2 (Basica True)
 
 interpBas :: Output Bas
 interpBas True = trian4
-interpBas False = blank
+interpBas False = Interp.blank
 
+interpBas2 :: Picture -> Vector -> Output Bas
+interpBas2 algo (x,y) True = transf f algo (x,y)
+                            where f p (_, _) = p
+interpBas2 algo (x,y) False = Interp.blank
 
 
 

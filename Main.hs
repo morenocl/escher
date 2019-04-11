@@ -29,9 +29,16 @@ initial :: IO (Conf Escher.Escher) -> IO ()
 initial cf = cf >>= \cfg ->
                   let x  = width cfg
                       y  = height cfg
-                  in display win white . withGrid $ interp (basic cfg) (fig cfg) (0,0) (x,0) (0,y)
-  where withGrid p = pictures [p, color grey $ grid 10 (0,0) 100 10]
-        grey = makeColorI 120 120 120 120
+                  in display win white $ interp (basic cfg) (fig cfg) (0,0) (x,0) (0,y)
 
-win = InWindow "Nice Window" (200, 200) (0, 0)
-main = initial $ return (ej 100 100)
+qw :: Picture -> Vector -> IO(Conf Escher.Escher)
+qw img (x,y) = return $ Conf {
+                     basic = Escher.interpBas2 img (x,y)
+                   , fig = Escher.ejemplo
+                   , width = x
+                   , height = y
+                   }
+
+win = InWindow "Nice Window" (700, 700) (0, 0)
+main = do img <- loadBMP "fish.bmp"
+          initial $ qw img (153, 153)
