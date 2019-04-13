@@ -7,7 +7,7 @@
 
 ## Dibujo.hs
 
-Definir nuestro el lenguaje y las primeras funciones no fue 
+Definir el lenguaje y las primeras funciones no fue 
 una tarea complicada, ya que, era bastante intuitivo darse cuenta de que hacía cada función. Además al definir nuestros propios operadores facilitó la lectura de las  funciones ``ciclar`` , ``cuarteto`` y ``encimar4`` para que no quedaran 
 largas de tal forma que su compresión sea más simple.
 
@@ -39,3 +39,33 @@ A pesar de todas las dificultades que tuvimos hasta el momento la función que m
 
 
 ## Predicado.hs
+
+Al principio fue un dolor de cabeza no poder hacer Pattern Matching y tener que usar la función **sem**, pero a medida que ibamos avanzando era cada vez más simple e intuitivo. No obstante nos encontramos con un nuevo problema , como sem toma como parametros 7 funciones , muchas veces teníamos que definirlas y volviamos a lo de antes, nada más que en vez de tener que hacer Pattern Matching ahora teníamos que crear muchas funciones auxiliares que solo ibamos a usar una sola vez.
+
+Para poder solucionar esto y facilitar la legibilidad de nuestro código descubrimos que en haskell existen las *funciones anonimas* que tienen la siguiente forma: 
+
+
+``` haskell 
+    allDib ::  Pred a -> Dibujo a -> Bool
+    allDib p a = sem p id id id predand predand (&&) a
+            where predand = \_ _ x y -> x && y
+
+```
+
+Si bien este tipo de funciones eran muy útiles, en ciertos casos era mejor crear funciones auxiliares aunque no sea lo ideal, esto se puede ver en la forma en la que hicimos ``contar`` y ``desc``.
+
+El mayor obstaculo que tuvimos en esta parte del proyecto fue como crear la función ``TodoBien``, ya que, no podíamos utilizar el análisis por casos convencional de Haskell, para ello encontramos que podíamos utilizar **case**: 
+
+``` haskell 
+    case expression of pattern -> result  
+                       pattern -> result  
+                       pattern -> result  
+                       ...  
+```
+
+
+
+## Bibliografía
+
+1. [Anonymous function](https://wiki.haskell.org/Anonymous_function)
+2. [Haskell syntax](http://learnyouahaskell.com/syntax-in-functions)
