@@ -2,8 +2,11 @@
 
 ## Indice
 1. Dibujo.hs
+2. Predicado.hs
+3. Interp.hs
+4. Escher.hs
 
-    1.1  
+
 
 ## Dibujo.hs
 
@@ -62,6 +65,12 @@ El mayor obstaculo que tuvimos en esta parte del proyecto fue como crear la func
                        pattern -> result  
                        ...  
 ```
+
+## Interp.hs
+
+Toda la parte de interpretación geométrica no tuvimos mayores complicaciones, dado que, la consigna era bastante clara sobre lo que había que hacer. A pesar de esto para definir la función ``Interp`` estuvimos un buen rato hasta que pudimos entender que era el tipo **Output** ,pero más haya de eso avanzamos bastante rápido.
+
+## Escher.hs
 
 
 
