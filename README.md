@@ -91,17 +91,17 @@ Una vez que terminamos con los objetivos del proyecyto y corregimos un par de er
 
 ### Interactivo 
 
-Hacerlo interactivo no estaba dentro de nuestros planes, pero uno de los profesores nos sugiriió la idea y como teníamos tiempo decidimos implementrarlo.
+Hacerlo interactivo no estaba dentro de nuestros planes, pero uno de los profesores nos sugirió la idea y como teníamos tiempo decidimos implementrarlo.
 
 Lo podríamos haber hecho todo en un sólo bloque dentro del Main, pero iba a quedar con muchos if's anidados entonces la lectura del código no iba a ser secilla, para ello decidimos separlo en tres funciones: ``dibuja`` , ``muestraArch`` y ``dibujaBmp``.
 
-La primera es la que estaba por defecto, no hicimos nada, sólo lo pusimos en una función por separado. MuestraArch como dice el nombre se encarga de mostrar todas las imagenes básicas que se encuentrarn en **pathBase** ("./img/bmp/") para que el usuario eliga el Bmp que desea cargar. Finalmente dibujaBmp se encarga de cargar el archivo selleccionado y lo usa para la interpretación.
+La primera es la que estaba por defecto, no hicimos nada, sólo lo pusimos en una función por separado. MuestraArch como dice el nombre se encarga de mostrar todas las imagenes básicas que se encuentrarn en **pathBase** ("./img/bmp/") para que el usuario eliga el Bmp que desea cargar. Finalmente dibujaBmp se encarga de cargar el archivo seleccionado y lo usa para la interpretación.
 
 ### Animación
 
-Para poder comprender mejor como hacer una animación utilizando **Gloss** decidimos hacerlo desde cero, puesto que, si tratabamos de hacerlo sobre nuestro lenguaje sin realmente comprender como funciona la librería era un receta para el desastre. 
+Para poder comprender mejor como hacer una animación utilizando **Gloss** decidimos hacerlo desde cero, puesto que, si tratabamos de hacerlo sobre nuestro proyecto sin realmente comprender como funciona la librería era un receta para el desastre. 
 
-Descubrimos que teníamos que usar la función *animate*, que funciona exactamente igual que *display* nada más que tiene un parametro extra que es una función que va de **Flot -> Picture**
+Descubrimos que teníamos que usar la función *animate*, que funciona exactamente igual que *display* nada más que tiene un parametro extra que es una función que va de **Float -> Picture**
 que sirve para producir el siguiente frame de la animación, a la que se le pasa el tiempo en segundos desde que empezó el programa.
 
 En nuestro caso nosotros queríamos que el dibujo Escher rotara cierta cantidad de grados cada frame y lo implementamos de la siguiente manera: 
@@ -117,12 +117,12 @@ En nuestro caso nosotros queríamos que el dibujo Escher rotara cierta cantidad 
 
 ### Color 
 
-Una vez que logramos que todo lo anterior funcionara decidimos que el dibujo tenga un color distinto para ello encontramos que podíamos usar la función **color**. Como no queríamos que siempre tenga el mismo color encontramos la función **makecolor** que dado 4 numeros (entre 0 y 1) te devuelve un color. Los priemros 3 son las componentes rojo, verde, azul y la úkltima es el alpha. Lo hicimos de las siguiente forma:
+Una vez que logramos que todo lo anterior funcionara decidimos que el dibujo tenga un color distinto para ello encontramos que podíamos usar la función **color**. Como no queríamos que siempre tenga el mismo color encontramos la función **makecolor** que dado 4 numeros (entre 0 y 1) te devuelve un color. Los priemros 3 son las componentes rojo, verde, azul y la última es la alpha. Lo hicimos de las siguiente forma:
 
 ```haskell
     color (makeColor (abs (sin (3*time))) (abs (cos (9*time))) (abs (sin time)) 1)
 ```
-Como queríamos que cambie a medida que pasa el tiempo teníamos que usar la varible tiempo de alguan forma, pero como los datos tenían que ser entre 0 y 1 al principio no se nos ocurría la forma. Luego de pensar mucho decidimos usar las funciones seno y coseno, sin embargo nos pueden dar valores entre -1 y 1, por lo tanto le aplicamos el valor absoluto para asegurarnos que los valores estén bien. También podemos observar que la componente roja y la azul usan ambes la función seno, pero toman distintos valores, esto es para que no den los mismo valores y tengamos un rango de colores mucho más amplio.
+Como queríamos que cambie a medida que pasa el tiempo teníamos que usar la varible tiempo de alguna forma, pero como los datos tenían que ser entre 0 y 1 al principio no se nos ocurría la forma. Luego de pensar mucho decidimos usar las funciones seno y coseno, sin embargo nos pueden dar valores entre -1 y 1, por lo tanto le aplicamos el valor absoluto para asegurarnos que los valores estén bien. También podemos observar que la componente roja y la azul usan ambes la función seno, pero toman distintos valores, esto es para que no den los mismo valores y tengamos un rango de colores mucho más amplio.
 
 
 ## Bibliografía
