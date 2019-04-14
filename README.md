@@ -87,15 +87,15 @@ Las funciones ``Lado`` y ``Esquina`` estan definidas de forma recursiva sobre un
 
 ## Extras 
 
-Una vez que terminamos con los objetivos del proyecyto y corregimos un par de errores, decidimos divertirnos un poco e implementamos un par de cosas más.
+Una vez que terminamos con los objetivos del proyecto y corregimos un par de errores, decidimos divertirnos un poco e implementamos un par de cosas más.
 
 ### Interactivo 
 
 Hacerlo interactivo no estaba dentro de nuestros planes, pero uno de los profesores nos sugirió la idea y como teníamos tiempo decidimos implementrarlo.
 
-Lo podríamos haber hecho todo en un sólo bloque dentro del Main, pero iba a quedar con muchos if's anidados entonces la lectura del código no iba a ser secilla, para ello decidimos separlo en tres funciones: ``dibuja`` , ``muestraArch`` y ``dibujaBmp``.
+Lo podríamos haber hecho todo en un sólo bloque dentro del Main, pero iba a quedar con muchos if's anidados entonces la lectura del código no iba a ser secilla, para ello decidimos separlo en tres funciones: ``dibujaLineas`` , ``muestraArchivos`` y ``dibujaBmp``.
 
-La primera es la que estaba por defecto, no hicimos nada, sólo lo pusimos en una función por separado. MuestraArch como dice el nombre se encarga de mostrar todas las imagenes básicas que se encuentrarn en **pathBase** ("./img/bmp/") para que el usuario eliga el Bmp que desea cargar. Finalmente dibujaBmp se encarga de cargar el archivo seleccionado y lo usa para la interpretación.
+La primera es la que estaba por defecto para dibujar triangulos, le agregamos una configuracion para curvas, y lo pusimos en una función por separado. MuestraArchivos como dice el nombre se encarga de mostrar todas las imagenes básicas que se encuentrarn en **pathBase** ("./img/bmp/") para que el usuario eliga el Bmp que desea cargar. Finalmente dibujaBmp se encarga de cargar el archivo seleccionado y lo usa para la interpretación. Todas dan la posibilidad de salir de la ejecucion con ``0``
 
 ### Animación
 
