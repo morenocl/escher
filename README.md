@@ -6,6 +6,10 @@
 3. Interp.hs
 4. Escher.hs
 5. Extras 
+    
+    5.1 Interactivo
+
+    5.2 Animación 
 
 
 
@@ -31,11 +35,14 @@ largas de tal forma que su compresión sea más simple.
 ```
 
 
-Sin embargo cuando empezamos con *Esquemas para la manipulación de figura* a medida que avazabamos era cada vez más complicado y por otro lado tedioso dado que por ahora teníamos que hacer **Pattern Matching** y las funciones tenían una longitud considerable lo que hacía que sea difícil darse cuenta cual era su función a simple viste.
+Sin embargo cuando empezamos con *Esquemas para la manipulación de figura* a medida que avazabamos era cada vez más complicado y por otro lado tedioso dado que por ahora teníamos que hacer **Pattern Matching** y las funciones tenían una longitud considerable lo que hacía que sea difícil darse cuenta cual era su función a simple vista.
 
-> Ejemplos de estas funciones son: 
-> *  mapDib :: (a -> b) -> Dibujo a -> Dibujo b 
-> *  cambia :: (a -> Dibujo b) -> Dibujo a -> Dibujo b  
+``` haskell
+    --Ejemplos de estas funciones son: 
+    mapDib :: (a -> b) -> Dibujo a -> Dibujo b 
+    cambia :: (a -> Dibujo b) -> Dibujo a -> Dibujo b 
+
+``` 
 
 
 A pesar de todas las dificultades que tuvimos hasta el momento la función que más nos constó con diferencia fue 
@@ -88,12 +95,40 @@ Hacerlo interactivo no estaba dentro de nuestros planes, pero uno de los profeso
 
 Lo podríamos haber hecho todo en un sólo bloque dentro del Main, pero iba a quedar con muchos if's anidados entonces la lectura del código no iba a ser secilla, para ello decidimos separlo en tres funciones: ``dibuja`` , ``muestraArch`` y ``dibujaBmp``.
 
-La primera es la que estaba por defecto, no hicimos nada, sólo lo pusimos en una función por separado. MuestraArch como dice el nombre se encarga de mostrar todas las imagenes básicas que se encuentrarn en **pathBase** ("./img/bmp/") para que el usuario eliga el Bmp que desea cargar. Finalmente dibujaBmp se encarga de cargar el archivo selleccionado y lo usa par ala interpretación.
+La primera es la que estaba por defecto, no hicimos nada, sólo lo pusimos en una función por separado. MuestraArch como dice el nombre se encarga de mostrar todas las imagenes básicas que se encuentrarn en **pathBase** ("./img/bmp/") para que el usuario eliga el Bmp que desea cargar. Finalmente dibujaBmp se encarga de cargar el archivo selleccionado y lo usa para la interpretación.
 
 ### Animación
+
+Para poder comprender mejor como hacer una animación utilizando **Gloss** decidimos hacerlo desde cero, puesto que, si tratabamos de hacerlo sobre nuestro lenguaje sin realmente comprender como funciona la librería era un receta para el desastre. 
+
+Descubrimos que teníamos que usar la función *animate*, que funciona exactamente igual que *display* nada más que tiene un parametro extra que es una función que va de **Flot -> Picture**
+que sirve para producir el siguiente frame de la animación, a la que se le pasa el tiempo en segundos desde que empezó el programa.
+
+En nuestro caso nosotros queríamos que el dibujo Escher rotara cierta cantidad de grados cada frame y lo implementamos de la siguiente manera: 
+
+``` haskell 
+    
+    draw :: Float -> Picture -> Picture
+    draw t = rotate (t*70)
+
+    in animate win white (\time -> draw time) $ interp ..
+
+```
+
+### Color 
+
+Una vez que logramos que todo lo anterior funcionara decidimos que el dibujo tenga un color distinto para ello encontramos que podíamos usar la función **color**. Como no queríamos que siempre tenga el mismo color encontramos la función **makecolor** que dado 4 numeros (entre 0 y 1) te devuelve un color. Los priemros 3 son las componentes rojo, verde, azul y la úkltima es el alpha. Lo hicimos de las siguiente forma:
+
+```haskell
+    color (makeColor (abs (sin (3*time))) (abs (cos (9*time))) (abs (sin time)) 1)
+```
+Como queríamos que cambie a medida que pasa el tiempo teníamos que usar la varible tiempo de alguan forma, pero como los datos tenían que ser entre 0 y 1 al principio no se nos ocurría la forma. Luego de pensar mucho decidimos usar las funciones seno y coseno, sin embargo nos pueden dar valores entre -1 y 1, por lo tanto le aplicamos el valor absoluto para asegurarnos que los valores estén bien. También podemos observar que la componente roja y la azul usan ambes la función seno, pero toman distintos valores, esto es para que no den los mismo valores y tengamos un rango de colores mucho más amplio.
+
 
 ## Bibliografía
 
 1. [Anonymous function](https://wiki.haskell.org/Anonymous_function)
 2. [Haskell syntax](http://learnyouahaskell.com/syntax-in-functions)
 3. [Functional Geometry](https://cs.famaf.unc.edu.ar/~mpagano/henderson-funcgeo2.pdf)
+4. [Animate Gloss](https://hackage.haskell.org/package/gloss-1.6.0.1/docs/Graphics-Gloss-Interface-Animate.html)
+5. [Color Gloss](http://hackage.haskell.org/package/gloss-1.1.0.0/docs/Graphics-Gloss-Color.html)
