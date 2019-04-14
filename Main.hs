@@ -15,12 +15,19 @@ data Conf a = Conf {
   , height :: Float
   }
 
-ej x y = Conf {
-                basic = Escher.interpBas
-              , fig = Escher.ejemplo
-              ,  width = x
-              , height = y
-              }
+ej1 x y = Conf {
+    basic = Escher.interpBas    -- Configuracion que interpreta triangulos
+  , fig = Escher.ejemplo
+  ,  width = x
+  , height = y
+  }
+
+ej2 x y = Conf {
+    basic = Escher.interpBas'   -- Configuracion que interpreta curvas
+  , fig = Escher.ejemplo
+  ,  width = x
+  , height = y
+  }
 
 -- Dada una computación que construye una configuración, mostramos por
 -- pantalla la figura de la misma de acuerdo a la interpretación para
@@ -30,8 +37,9 @@ initial :: IO (Conf Escher.Escher) -> IO ()
 initial cf = cf >>= \cfg ->
                   let x  = width cfg
                       y  = height cfg
-                  in display win white $ interp (basic cfg) (fig cfg) (0,0) (x,0) (0,y)
+                  in display win white $ interp (basic cfg) (fig cfg) (-x/2,-y/2) (x,0) (0,y)
 
+-- Configuracion que interpreta imagenes bmp
 qw :: Picture -> Vector -> IO(Conf Escher.Escher)
 qw img (x,y) = return $ Conf {
                      basic = Escher.interpBas2 img (x,y)
@@ -47,26 +55,28 @@ pathBase = "./img/bmp/"
 -- Leer desde el main hacia arriba.
 dibujaBmp :: String -> IO()
 dibujaBmp str = if str=="0"
-            then return()
-            else do
-                img <- loadBMP $ pathBase ++ str
-                initial $ qw img (153, 153)
+                  then return()
+                  else do
+                    img <- loadBMP $ pathBase ++ str
+                    initial $ qw img (153, 153)
 
-muestraArch nombre = if nombre=="0"
-                      then return()
-                      else do
-                        listaDeArchivos <- listDirectory pathBase
-                        mapM putStrLn listaDeArchivos
-                        archivo <- getLine
-                        dibujaBmp archivo
+muestraArchivos = do listaDeArchivos <- listDirectory pathBase
+                     mapM putStrLn listaDeArchivos
+                     putStrLn "0- Salir"
+                     archivo <- getLine
+                     dibujaBmp archivo
 
-dibuja opt = if opt=="1"
-                then initial $ return (ej 100 100)
-                else muestraArch opt
+dibujaLineas = do putStrLn "1- Triangulos\n2- Curvas\n0- Salir"
+                  opt <- getLine
+                  case opt of
+                    "0" -> return()
+                    "1" -> initial $ return (ej1 700 700)
+                    "2" -> initial $ return (ej2 700 700)
 
 win = InWindow "Nice Window" (700, 700) (0, 0)
-main = do putStrLn "1- Triangulos\n2- bmp\n0- Salir"
+main = do putStrLn "1- Lineas\n2- bmp\n0- Salir"
           str <- getLine
-          if str=="0"
-            then return()
-            else dibuja str
+          case str of
+            "0" -> return()
+            "1" -> dibujaLineas
+            "2" -> muestraArchivos
