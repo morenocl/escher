@@ -5,6 +5,7 @@
 2. Predicado.hs
 3. Interp.hs
 4. Escher.hs
+5. Extras 
 
 
 
@@ -72,9 +73,20 @@ Toda la parte de interpretación geométrica no tuvimos mayores complicaciones, 
 
 ## Escher.hs
 
+Llegado a este punto las cosas se complicaron porque había que hacer el Dibujo Escher, para poder entender mejor como estaba compuesto decidimos leer del apunte proporcionado por los profes donde explicaba de forma detallada como creearlo y como estaban especificadas las funciones auxiliares. 
+
+Las funciones ``Lado`` y ``Esquina`` estan definidas de forma recursiva sobre un cuarteto, haciendo uso de **dibujo_t** y **dibujo_u**. Despues Noneto es solo juntar 9 dibujos en uno solo de 3x3. Finalmente Escher es un noneto donde cada dibujo es un lado o esquina según corresponde.
+
+
+## Extras 
+
+Una vez que terminamos con los objetivos del proyecyto y corregimos un par de errores, decidimos divertirnos un poco e implementamos un par de cosas más.
+
+### Interactivo 
 
 
 ## Bibliografía
 
 1. [Anonymous function](https://wiki.haskell.org/Anonymous_function)
 2. [Haskell syntax](http://learnyouahaskell.com/syntax-in-functions)
+3. [Functional Geometry](https://cs.famaf.unc.edu.ar/~mpagano/henderson-funcgeo2.pdf)
