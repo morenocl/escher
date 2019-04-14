@@ -27,9 +27,9 @@ lado 0 _ = Basica False
 lado n p = cuarteto (lado (n-1) p) (lado (n-1) p) (Rotar (dibujo_t p)) (dibujo_t p)
 
 -- por suerte no tenemos que poner el tipo!
-noneto p q r s t u v w x = Apilar 3 1 (Juntar 1 3 p (Juntar 2 1 q r))
-                            (Apilar 1 2 (Juntar 1 3 s (Juntar 2 1 t u))
-                                        (Juntar 1 3 v (Juntar 2 1 w x)))
+noneto p q r s t u v w x = Apilar 2 1 (Juntar 1 2 p (Juntar 1 1 q r))
+                            (Apilar 1 1 (Juntar 1 2 s (Juntar 1 1 t u))
+                                        (Juntar 1 2 v (Juntar 1 1 w x)))
 
 -- el dibujo de Escher:
 escher :: Int -> Dibujo Escher -> Dibujo Escher
@@ -41,16 +41,17 @@ escher n p = noneto (esquina n p) (lado n p) (r270(esquina n p))
 
 type Bas = Bool
 ejemplo :: Dibujo Bas
-ejemplo = escher 2 (Basica True)
+ejemplo = escher 3 (Basica True)
 
 interpBas :: Output Bas
-interpBas True = trian4
-interpBas False = Interp.blank
+interpBas bas = if bas then trian4 else Interp.blank
+
+interpBas' :: Output Bas
+interpBas' bas = if bas then curvita else Interp.blank
 
 interpBas2 :: Picture -> Vector -> Output Bas
-interpBas2 algo (x,y) True = transf f algo (x,y)
-                            where f p (_, _) = p
-interpBas2 algo (x,y) False = Interp.blank
+interpBas2 algo v bas = if bas then transf const algo v
+                                   else Interp.blank
 
 
 

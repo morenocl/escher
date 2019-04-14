@@ -46,6 +46,17 @@ trianD a b c = line $ map (a V.+) [c, half b , b V.+ c , c]
 rectan :: FloatingPic
 rectan a b c = line [a, a V.+ b, a V.+ b V.+ c, a V.+ c,a]
 
+--
+curvita :: FloatingPic
+curvita a b c = line $ bezier a (a V.+ b V.+((1/3) V.* c)) (a V.+ b V.+ c) 10
+
+bezier :: Vector -> Vector -> Vector -> Int -> [Vector]
+bezier p0 p1 p2 n = [ p1 V.+ (((1-t)^2) V.* (p0 V.+ (V.negate p1))) V.+ ((t^2) V.* (p2 V.+ (V.negate p1))) | t <- ts]
+  where ts = 0:map (divF n) [1..n]
+        divF :: Int -> Int -> Float
+        divF j i = toEnum i / toEnum j
+--
+
 simple :: Picture -> FloatingPic
 simple p _ _ _ = p
 
