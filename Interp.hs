@@ -35,7 +35,7 @@ trian2 :: FloatingPic
 trian2 a b c = line $ map (a V.+) [zero, c, b,zero]
 
 blank :: FloatingPic
-blank a b c = line $ map (zero V.+) [zero, zero, b,zero]
+blank a b c = Blank
 
 trian4 :: FloatingPic
 trian4 a b c = line [a , a V.+c, a V.+b,a ]
